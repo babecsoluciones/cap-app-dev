@@ -1,39 +1,50 @@
+var tURL = "https://cors-anywhere.herokuapp.com/http://cap.sdibabec.com/app/app-01-01.php";
 function iniciarSesion()
 {
           var obj = $('#datos').serializeJSON();
           var jsonString = JSON.stringify(obj);
-          $('#resProcess').modal('show');
+          
           $.ajax({
               type: "POST",
-              url: "https://cors-anywhere.herokuapp.com/http://app.fussionmd.com/app/app-01-01.php",
+              beforeSend: function(){
+                  $('.ajax-loader').css("visibility", "visible");
+                  
+            },
+              url: tURL,
               data: jsonString,
               contentType: "application/json; charset=utf-8",
               dataType: "json",
               success: function(data){
-                  $('#resProcess').modal('hide');
+                  
                   if(data.exito==1)
                   {
                       localStorage.setItem("codigousuario", data.codigousuario);
-                      localStorage.setItem("codigopromotoria", data.codigopromotoria);
-                      localStorage.setItem("codigotienda", data.codigotienda);
-                      localStorage.setItem("tiposimagenes", data.tiposimagenes);
-                      localStorage.setItem("productos", data.productos);
+                      localStorage.setItem("usuario", data.usuario);
                       localStorage.setItem("correo", data.correo);
                       localStorage.setItem("password", data.password);
-                      localStorage.setItem("selector", data.selectortienda);
                        window.location="index.html";
                   }
                   else
                   {
-                          document.getElementById('divErrores').innerHTML = "<div class=\"alert alert-danger\"><strong>"+data.error+"</div>";
-                                $('#resError').modal('show');
-                            setTimeout(function(){
-                                $('#resError').modal('hide');
-                          },2000);
+                          var mensaje="";
+                     
+                         mensaje += (data.error ? data.error : data.errores)+"\n";
+                     
+                          alert(mensaje);
+                
+                //document.getElementById('divErrores').innerHTML = "<div class=\"alert alert-danger\"><strong>"+data.error+"</div>";
+                //$('#resError').modal('show');
+                //setTimeout(function(){
+                //$('#resError').modal('hide');
+                //},2000);
                           //alert("Error al procesar la solicitud.\n<-Valide la siguiente informacion->\n\n"+mensaje);
                          
                   }
               },
+              complete: function(){
+                  $('.ajax-loader').css("visibility", "hidden");
+                  
+                },
               failure: function(errMsg) {
                   alert('Error al enviar los datos.');
               }
@@ -57,7 +68,7 @@ function reiniciarSesion()
           
           $.ajax({
               type: "POST",
-              url: "https://cors-anywhere.herokuapp.com/http://app.fussionmd.com/app/app-01-01.php",
+              url: tURL,
               data: jsonString,
               contentType: "application/json; charset=utf-8",
               dataType: "json",
@@ -82,22 +93,24 @@ function reiniciarSesion()
       
         }
 
+function cerrarSesion()
+{
+          if(confirm("¿Deseas cerrar la sesión?"))
+              {
+                localStorage.clear();
+                validarSesion();
+              }
+          
+        }
 function validarSesion()
 {
     if(localStorage.getItem("codigousuario"))
        {
-            var eCodUsuario = localStorage.getItem("codigousuario");
-        if(parseInt(eCodUsuario)<1)
-            { window.location="login.html"; }
-        var eCodPromotoria = localStorage.getItem("codigopromotoria");
-        if(localStorage.getItem("codigopromotoria")>0)
-        {
-            
-        }
-        else
-        {
-            alert("Sin promotorias para el dia de hoy!"); window.location="login.html"; 
-        }
+           var cmbUsuario = document.querySelectorAll("[id^=eCodUsuario]");
+           cmbUsuario.forEach(function(nodo){
+               nodo.value = localStorage.getItem("codigousuario");
+           });
+            document.getElementById('tUsuario').innerHTML = localStorage.getItem("usuario");
     }   
     else
         {
@@ -106,133 +119,18 @@ function validarSesion()
     
 }
 
-function cargarObjetos()
-{
-    var cmbUsuario = document.querySelectorAll("[id^=eCodUsuario]");
-    var cmbTienda = document.querySelectorAll("[id^=eCodUsuario]");
-    var cmbProductos = document.querySelectorAll("[id^=tdProductos]");
-    cmbUsuario.forEach(function(nodo){
-       nodo.value = localStorage.getItem("codigousuario"); 
-    });
-    document.getElementById('eCodUsuario').value = localStorage.getItem("codigousuario");
-    document.getElementById('eCodPromotoria').value = localStorage.getItem("codigopromotoria");
-    
-    cmbProductos.forEach(function(nodo){
-       nodo.innerHTML = localStorage.getItem("productos");
-    });
-    
-    if(document.getElementById('bTienda'))
-        {
-    document.getElementById('bTienda').innerHTML = localStorage.getItem("codigotienda");
-        }
-    if(document.getElementById('tdTiposImagenes'))
-        {
-    document.getElementById('tdTiposImagenes').innerHTML = 
-    localStorage.getItem("tiposimagenes");
-        }
-    if(document.getElementById('tdProductos'))
-        {
-    document.getElementById('tdProductos').innerHTML = 
-    localStorage.getItem("productos");
-        }
-    
-    if(localStorage.getItem("selector")==1)
-        {
-            document.getElementById("tdSelector").innerHTML = '<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modSelector">Cambiar Tienda</button>';
-        }
-    
-    cargarTienda();
-    
-}
-
-function cerrarSesion()
-{
-    if(confirm("Cerrar sesion?"))
-        {
-            localStorage.removeItem("codigousuario");
-            localStorage.removeItem("codigopromotoria");
-            localStorage.removeItem("codigotienda");
-            localStorage.removeItem("tiposimagenes");
-            localStorage.removeItem("productos");
-            localStorage.removeItem("selector");
-            localStorage.removeItem("correo");
-            localStorage.removeItem("password");
-            window.location="login.html"; 
-        }
-}
-
-function consultarArrastres()
-{
-         var eCodTienda         = document.getElementById('eCodTienda');
-         var eCodProducto       = document.getElementById('eCodProducto');
-         var eCodPresentacion   = document.getElementById('eCodPresentacion');
-          
-          if(eCodProducto.value && eCodPresentacion.value)
-              {
-                var obj = $('#datos').serializeJSON();
-                var jsonString = JSON.stringify(obj);
-                
-                var eInicial = document.getElementById('eInicial');
-                
-                $.ajax({
-                    type: "POST",
-                    url: "https://cors-anywhere.herokuapp.com/http://app.fussionmd.com/con/oper-mov-prm.php",
-                    data: jsonString,
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function(data){
-                        eInicial.value = data.inicial;
-                        if(parseInt(eInicial.value)>0)
-                            {
-                                eInicial.readOnly = true;
-                            }
-                    },
-                    failure: function(errMsg) {
-                        alert('Error al enviar los datos.');
-                    }
-                });
-              }
-             
-          
-      }
-    
-function consultarPresentaciones()
-{
-         var eCodProducto       = document.getElementById('eCodProducto');
-          
-          if(eCodProducto.value)
-              {
-                var obj = $('#datos-arr').serializeJSON();
-                var jsonString = JSON.stringify(obj);
-                
-                var eCodPresentacion = document.getElementById('eCodPresentacion');
-                
-                $.ajax({
-                    type: "POST",
-                    url: "https://cors-anywhere.herokuapp.com/http://app.fussionmd.com/con/prod-pres.php",
-                    data: jsonString,
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function(data){
-                        eCodPresentacion.innerHTML = data.tHTML;
-                    },
-                    failure: function(errMsg) {
-                        alert('Error al enviar los datos.');
-                    }
-                });
-              }
-             
-          
-      }
-
-function enviarDatos(codigo)
+function enviarDatos()
 {           
-            var obj = $('#datos'+codigo).serializeJSON();
+            var obj = $('#frmUsuario').serializeJSON();
           var jsonString = JSON.stringify(obj);
           
           $.ajax({
               type: "POST",
-              url: "https://cors-anywhere.herokuapp.com/http://app.fussionmd.com/app/app-01-01.php",
+              beforeSend: function(){
+                  $('.ajax-loader').css("visibility", "visible");
+                  
+            },
+              url: tURL,
               data: jsonString,
               contentType: "application/json; charset=utf-8",
               dataType: "json",
@@ -255,31 +153,119 @@ function enviarDatos(codigo)
                          
                       }
               },
+              complete: function(){
+                  $('.ajax-loader').css("visibility", "hidden");
+                  
+                },
               failure: function(errMsg) {
                   alert('Error al enviar los datos.');
               }
           });    
         }
 
-function consultarDatos()
+function guardarAlerta()
 {           
-            var obj = $('#datos').serializeJSON();
+            var obj = $('#frmNueva').serializeJSON();
           var jsonString = JSON.stringify(obj);
           
           $.ajax({
               type: "POST",
-              url: "https://cors-anywhere.herokuapp.com/http://app.fussionmd.com/app/app-01-01.php",
+              beforeSend: function(){
+                  $('.ajax-loader').css("visibility", "visible");
+                  
+            },
+              url: "https://cors-anywhere.herokuapp.com/http://cap.sdibabec.com/cla/oper-ale-reg.php",
               data: jsonString,
               contentType: "application/json; charset=utf-8",
               dataType: "json",
               success: function(data){
-                  document.getElementById('divXHR').innerHTML = data.tHTML;
+                  if(data.exito==1)
+                  {
+                      alert("Informacion almacenada exitosamente");
+                      document.getElementById('frmNueva').reset;
+                      setTimeout(function(){ window.location="index.html"; }, 500);
+                      
+                  }
+                  else
+                      {
+                         
+                          var mensaje="";
+                          for(var i=0;i<data.errores.length;i++)
+                     {
+                         mensaje += "-"+data.errores[i]+"\n";
+                     }
+                          alert("Error al procesar la solicitud.\n<-Valide la siguiente informacion->\n\n"+mensaje);
+                         
+                      }
               },
+              complete: function(){
+                  $('.ajax-loader').css("visibility", "hidden");
+                  
+                },
               failure: function(errMsg) {
                   alert('Error al enviar los datos.');
               }
           });    
         }
+
+function consultarAlerta(codigo)
+{           
+    document.getElementById('eCodAlerta').value = codigo;
+            var obj = $('#frmConsulta').serializeJSON();
+          var jsonString = JSON.stringify(obj);
+    
+    var divAlertas = document.getElementById('divAlertas'),
+        divConsulta = document.getElementById('divConsulta'),
+        syncAlert = document.getElementById('syncAlert'),
+        backCon = document.getElementById('backCon');
+    
+          
+          $.ajax({
+              type: "POST",
+              beforeSend: function(){
+                  $('.ajax-loader').css("visibility", "visible");
+                  
+            },
+              url: tURL,
+              data: jsonString,
+              contentType: "application/json; charset=utf-8",
+              dataType: "json",
+              success: function(data){
+                  
+                divAlertas.style.display = 'none';
+                divConsulta.style.display = 'inline';
+                  
+                  syncAlert.style.display = 'none';
+                  backCon.style.display = 'inline';
+                  
+                document.getElementById('xhrDetalle') .innerHTML = data.tHTML;
+                  $("#xhrDetalle").listview("refresh");
+              },
+              complete: function(){
+                  $('.ajax-loader').css("visibility", "hidden");
+                  
+                },
+              failure: function(errMsg) {
+                  alert('Error al enviar los datos.');
+              }
+          });    
+        }
+
+function regresar()
+{
+    var divAlertas = document.getElementById('divAlertas'),
+        divConsulta = document.getElementById('divConsulta'),
+        syncAlert = document.getElementById('syncAlert'),
+        backCon = document.getElementById('backCon');
+    
+    divAlertas.style.display = 'inline';
+    divConsulta.style.display = 'none';
+    
+    syncAlert.style.display = 'inline';
+    backCon.style.display = 'none';
+    
+    cargarAlertas();
+}
 
 function guardarImagen(indice) 
 {
@@ -328,7 +314,7 @@ function cargarTienda()
         {
           $.ajax({
               type: "POST",
-              url: "https://cors-anywhere.herokuapp.com/http://app.fussionmd.com/app/app-01-01.php",
+              url: tURL,
               data: jsonString,
               contentType: "application/json; charset=utf-8",
               dataType: "json",
@@ -358,7 +344,7 @@ function cargarAlertas()
                   $('.ajax-loader').css("visibility", "visible");
                   syncAlertas.disabled=true;
             },
-              url: "https://cors-anywhere.herokuapp.com/http://cap.sdibabec.com/app/app-01-01.php",
+              url: tURL,
               data: jsonString,
               contentType: "application/json; charset=utf-8",
               dataType: "json",
@@ -383,6 +369,8 @@ function cargarConfiguracion()
           var jsonString = JSON.stringify(obj);
           var eCodTipoAlerta = document.getElementById('eCodTipoAlerta');
           var eCodSeveridad = document.getElementById('eCodSeveridad');
+          var xhrAccesos = document.getElementById('xhrAccesos');
+          var xhrCentros = document.getElementById('xhrCentros');
     
           $.ajax({
               type: "POST",
@@ -390,14 +378,18 @@ function cargarConfiguracion()
                   $('.ajax-loader').css("visibility", "visible");
                   
             },
-              url: "https://cors-anywhere.herokuapp.com/http://cap.sdibabec.com/app/app-01-01.php",
+              url: tURL,
               data: jsonString,
               contentType: "application/json; charset=utf-8",
               dataType: "json",
               success: function(data){
                   eCodTipoAlerta.innerHTML = data.tipo;
                   eCodSeveridad.innerHTML = data.severidad;
-                  //$("#xhrGeneral").listview("refresh");
+                  xhrAccesos.innerHTML = data.accesos;
+                  xhrCentros.innerHTML = data.centros;
+                  $("#xhrGeneral").listview("refresh");
+                  $("#xhrAccesos").listview("refresh");
+                  $("#xhrCentros").listview("refresh");
               },
               complete: function(){
                   $('.ajax-loader').css("visibility", "hidden");
@@ -408,4 +400,41 @@ function cargarConfiguracion()
               }
           }); 
         
+}
+
+function cambiarPassword()
+{
+    var tPassword = document.getElementById('tPassword'),
+        tPassword2 = document.getElementById('tPasswordNvo');
+    
+    if(tPassword.value || tPassword2.value)
+        {
+    if(tPassword.value==tPassword2.value)
+        {
+            alert("Ambos password son iguales");
+        }
+    else
+        {
+            if(tPassword.value!=localStorage.getItem("password"))
+            {
+                alert("El password actual es distinto");
+            }
+            else
+            {
+                if(tPassword2.value==localStorage.getItem("password"))
+                {
+                    alert("El nuevo password debe ser distinto al actual");
+                }
+                else
+                {
+                    enviarDatos();
+                }
+            }
+            
+        }
+        }
+    else
+        {
+            alert("Ingrese los password");
+        }
 }

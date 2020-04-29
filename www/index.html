@@ -43,7 +43,7 @@
                 background-color:transparent;
             }
 		</style>
-        <title>Hello World</title>
+        <title>CONSIGNAS</title>
     </head>
     <body>
 		<!-- page 1 -->
@@ -52,13 +52,22 @@
 				<h1>Alertas</h1>
 				<a href="#page2" class="ui-btn-right"><i class="far fa-file"></i></a>
 				<a href="#" class="ui-btn-left" onclick="cargarAlertas()" id="syncAlert"><i class="fas fa-sync"></i></a>
+				<a href="#" class="ui-btn-left" onclick="regresar()" id="backCon" style="display:none"><i class="fas fa-arrow-left"></i></a>
 			</div>
 			<form id="alertas"><input type="hidden" name="accion" id="accion" value="ale-con"></form>
 			<div class="ui-content">
 				<!--imprimimos la lista-->
+				<div id="divAlertas">
 				<ul data-role="listview" id="xhrAlertas">
                     
                 </ul>
+                </div>
+                <div id="divConsulta">
+                <form id="frmConsulta"><input type="hidden" name="eCodAlerta" id="eCodAlerta" value=""><input type="hidden" name="accion" value="ale-det"></form>
+				<ul data-role="listview" id="xhrDetalle">
+                    
+                </ul>
+                </div>
 				<!--imprimimos la lista-->
 			</div><!-- end page 1 content -->
 			
@@ -77,13 +86,14 @@
 		<div data-role="page" id="page2">
 			<div data-role="header" data-position="fixed">
 				<h1>Nueva</h1>
-				<a href="#" class="ui-btn-right"><i class="far fa-save"></i></a>
+				<a href="#" class="ui-btn-right" onclick="guardarAlerta()"><i class="far fa-save"></i></a>
 			</div>
 			
 			<div class="ui-content">
 			<form id="frmConfig"><input type="hidden" name="accion" value="cfg-con"></form>
 				<!--imprimimos los tabs-->
 				<form id="frmNueva">
+                <input type="hidden" name="eCodUsuario" id="eCodUsuario0">
 				    <div data-role="tabs" id="tabs">
   <div data-role="navbar">
     <ul><li><a href="#one" data-ajax="false">Generales</a></li><li><a href="#two" data-ajax="false">Accesos</a></li><li><a href="#three" data-ajax="false">Centros</a></li>
@@ -148,12 +158,35 @@
 		
 				<!-- page 3 -->
 		<div data-role="page" id="page3">
-			<div data-role="header">
-				<h1>Page 3</h1>
+			<div data-role="header" data-position="fixed">
+				<h1>Perfil</h1>
+				<a href="#" class="ui-btn-right" onclick="cerrarSesion()"><i class="fas fa-sign-out-alt"></i></a>
 			</div>
 			
 			<div class="ui-content">
-				
+				<form id="frmUsuario">
+				<input type="hidden" name="accion" value="upd-pwd">
+				<input type="hidden" name="eCodUsuario" id="eCodUsuario1">
+    <ul data-role="listview">
+        <li class="ui-field-contain">
+            Usuario: <span id="tUsuario"></span>
+        </li>
+        <li class="ui-field-contain">
+            <label for="tPassword">Contrase&ntilde;a actual:</label>
+        <input type="password" name="tPassword" id="tPassword" value="" data-clear-btn="true">
+        </li>
+        <li class="ui-field-contain">
+            <label for="tPasswordNvo">Contrase&ntilde;a nueva:</label>
+        <input type="password" name="tPasswordNvo" id="tPasswordNvo" value="" data-clear-btn="true">
+        </li>
+        <li class="ui-body ui-body-b">
+            <fieldset class="ui-grid-a">
+                    <div class="ui-block-a"><button type="reset" class="ui-btn ui-corner-all ui-btn-a">Cancelar</button></div>
+                    <div class="ui-block-b"><button type="button" class="ui-btn ui-corner-all ui-btn-a" onclick="cambiarPassword()">Guardar</button></div>
+            </fieldset>
+        </li>
+    </ul>
+</form>
 			</div><!-- end page 3 content -->
 			
 			<div data-role="footer" data-position="fixed">
@@ -191,7 +224,7 @@
             var getPage;
             
         $(document).ready(function() {
-            //validarSesion();
+            validarSesion();
             cargarConfiguracion();
             
             getPage = $.mobile.pageContainer.pagecontainer("getActivePage");
