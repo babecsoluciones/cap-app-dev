@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        
+        
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+		<link rel="stylesheet" type="text/css" href="js/jquery-1.5.0.mobile.min.css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+		<style>
+		/* For avoiding title truncation in wp8 */
+		.ui-header .ui-title {
+				overflow: visible !important;
+		}
+		/* For fixing the absolute position issue for the default cordova gen page*/
+		#cjp-accordion1 .app {
+				left: 5px !important;
+				margin: 5px !important;
+				position: relative !important;
+		}
+            
+        .ajax-loader {
+          visibility: hidden;
+          background-color: rgba(241,242,243);
+          position: absolute;
+          z-index: +100 !important;
+          width: 100%;
+          height:100%;
+        }
+        
+        .ajax-loader img {
+          position: relative;
+          top:30%;
+          left:25%;
+        }
+		</style>
+        <title>Hello World</title>
+    </head>
+    <body>
+		<!-- page 1 -->
+		<div data-role="page" id="page1">
+			<div data-role="header" data-position="fixed">
+				<h1>Alertas</h1>
+				<a href="#page2" data-icon="plus" class="ui-btn-right">Nueva</a>
+			</div>
+			<form id="alertas"><input type="hidden" name="accion" id="accion" value="ale-con"></form>
+			<div class="ui-content">
+				<!--imprimimos la lista-->
+				<ul data-role="listview" id="xhrAlertas">
+                    
+                </ul>
+				<!--imprimimos la lista-->
+			</div><!-- end page 1 content -->
+			
+			<div data-role="footer" data-position="fixed">
+				<div data-role="navbar">
+					<ul>
+						<li><a href="#page2"><i class="far fa-file"></i> <br>nueva</a></li>
+						<li><a href="#page1" class="ui-btn-active ui-state-persist"><i class="fas fa-tachometer-alt"></i><br>Alertas</a></li>
+						<li><a href="#page3"><i class="fas fa-users-cog"></i><br>Perfil</a></li>
+					</ul>
+				</div><!-- /navbar -->
+			</div><!-- /footer -->
+		</div><!-- /page1 -->
+
+				<!-- page 2 -->
+		<div data-role="page" id="page2">
+			<div data-role="header" data-position="fixed">
+				<h1>Nueva</h1>
+				<a href="#" data-icon="check" class="ui-btn-right">Guardar</a>
+			</div>
+			
+			<div class="ui-content">
+				<!--imprimimos los tabs-->
+				<form id="frmNueva">
+				    <div data-role="tabs" id="tabs">
+  <div data-role="navbar">
+    <ul><li><a href="#one" data-ajax="false">Generales</a></li><li><a href="#two" data-ajax="false">Accesos</a></li><li><a href="ajax-content-ignore.html" data-ajax="false">Centros</a></li>
+    </ul>
+  </div>
+  <div id="one" class="ui-body-d ui-content">
+    <h1>Datos Generales</h1>
+  </div>
+  <div id="two" class="ui-body-d ui-content">
+    <ul data-role="listview">
+    <li>Acura</li>
+    <li>Audi</li>
+    <li>BMW</li>
+    <li>Cadillac</li>
+    <li>Ferrari</li>
+</ul>
+  </div>
+</div>
+			</form>	
+				<!--imprimimos los tabs-->
+			</div><!-- end page 2 content -->
+			
+			<div data-role="footer" data-position="fixed">
+				<div data-role="navbar">
+					<ul>
+						<li><a href="#page2" class="ui-btn-active ui-state-persist"><i class="far fa-file"></i> <br>nueva</a></li>
+						<li><a href="#page1"><i class="fas fa-tachometer-alt"></i><br>Alertas</a></li>
+						<li><a href="#page3"><i class="fas fa-users-cog"></i><br>Perfil</a></li>
+					</ul>
+				</div><!-- /navbar -->
+			</div><!-- /footer -->
+		</div><!-- /page2 -->
+		
+				<!-- page 3 -->
+		<div data-role="page" id="page3">
+			<div data-role="header">
+				<h1>Page 3</h1>
+			</div>
+			
+			<div class="ui-content">
+				<p>This is page 3</p>
+			</div><!-- end page 3 content -->
+			
+			<div data-role="footer" data-position="fixed">
+				<div data-role="navbar">
+					<ul>
+						<li><a href="#page2"><i class="far fa-file"></i> <br>nueva</a></li>
+						<li><a href="#page1"><i class="fas fa-tachometer-alt"></i><br>Alertas</a></li>
+						<li><a href="#page3" class="ui-btn-active ui-state-persist"><i class="fas fa-users-cog"></i><br>Perfil</a></li>
+					</ul>
+				</div><!-- /navbar -->
+			</div><!-- /footer -->
+		</div><!-- /page3 -->
+		
+		<!--loader-->
+		<div class="ajax-loader">
+          <img src="js/images/ajax-loader.gif" class="img-responsive" />
+        </div>
+		<!--loader-->
+<!--<script type="text/javascript" src="cordova.js"></script>-->
+    <script type="text/javascript" src="js/jquery-1.11.1.min.js" id="cordova-jquery"></script><script type="text/javascript" id="jqm-trans-disable">
+		/* For having a faster transition */
+		$(document).on("mobileinit", function() {
+				$.mobile.defaultPageTransition = "none";
+				$.mobile.defaultDialogTransition = "none";
+		});
+		</script><script type="text/javascript" src="js/jquery-1.5.0.mobile.min.js"></script><script type="text/javascript" src="js/index.js"></script>
+		<script src="http://rawgit.com/watusi/jquery-mobile-iscrollview/master/demo/build/javascripts/iscroll.js"></script>
+    <script src="http://rawgit.com/watusi/jquery-mobile-iscrollview/master/demo/build/javascripts/jquery.mobile.iscrollview.js"></script>   
+		
+		<script type="text/javascript" src="js/jquery.serializejson.js"></script>
+		<script type="text/javascript" src="js/aplicacion.js"></script>
+		<script language="javascript">
+            var activePage;
+            var currentPage;
+            var getPage;
+            
+        $(document).ready(function() {
+            //validarSesion();
+            cargarAlertas();
+            
+            getPage = $.mobile.pageContainer.pagecontainer("getActivePage");
+            currentPage = getPage[0].id;
+            
+            var scroll = $(window).scrollTop();
+            // Do something
+            
+        });
+            
+        $(window).scroll(function (event) {
+            var scroll = $(window).scrollTop();
+            // Do something
+            alert(scroll);
+        });
+            
+         setInterval(function(){
+             getPage = $.mobile.pageContainer.pagecontainer("getActivePage");
+             activePage = getPage[0].id;
+             
+             if(currentPage != activePage)
+                 {
+                     currentPage = activePage
+                 }
+             
+         },1500);
+            
+    </script>
+    </body>
+</html>
