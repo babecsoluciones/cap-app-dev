@@ -350,11 +350,13 @@ function cargarAlertas()
       var obj = $('#alertas').serializeJSON();
           var jsonString = JSON.stringify(obj);
           var xhrAlertas = document.getElementById('xhrAlertas');
+          var syncAlertas = document.getElementById('syncAlert');
     
           $.ajax({
               type: "POST",
               beforeSend: function(){
                   $('.ajax-loader').css("visibility", "visible");
+                  syncAlertas.disabled=true;
             },
               url: "https://cors-anywhere.herokuapp.com/http://cap.sdibabec.com/app/app-01-01.php",
               data: jsonString,
@@ -366,6 +368,7 @@ function cargarAlertas()
               },
               complete: function(){
                   $('.ajax-loader').css("visibility", "hidden");
+                  syncAlertas.disabled=false;
                 },
               failure: function(errMsg) {
                   alert('Error al enviar los datos.');

@@ -36,6 +36,12 @@
           top:30%;
           left:25%;
         }
+            
+        .miBoton
+            {
+                border:none;
+                background-color:transparent;
+            }
 		</style>
         <title>Hello World</title>
     </head>
@@ -44,7 +50,8 @@
 		<div data-role="page" id="page1">
 			<div data-role="header" data-position="fixed">
 				<h1>Alertas</h1>
-				<a href="#page2" data-icon="plus" class="ui-btn-right">Nueva</a>
+				<a href="#page2" class="ui-btn-right"><i class="far fa-file"></i></a>
+				<a href="#" class="ui-btn-left" onclick="cargarAlertas()" id="syncAlert"><i class="fas fa-sync"></i></a>
 			</div>
 			<form id="alertas"><input type="hidden" name="accion" id="accion" value="ale-con"></form>
 			<div class="ui-content">
@@ -70,7 +77,7 @@
 		<div data-role="page" id="page2">
 			<div data-role="header" data-position="fixed">
 				<h1>Nueva</h1>
-				<a href="#" data-icon="check" class="ui-btn-right">Guardar</a>
+				<a href="#" class="ui-btn-right"><i class="far fa-save"></i></a>
 			</div>
 			
 			<div class="ui-content">
