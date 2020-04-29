@@ -376,3 +376,36 @@ function cargarAlertas()
           }); 
         
 }
+
+function cargarConfiguracion()
+{
+      var obj = $('#frmConfig').serializeJSON();
+          var jsonString = JSON.stringify(obj);
+          var eCodTipoAlerta = document.getElementById('eCodTipoAlerta');
+          var eCodSeveridad = document.getElementById('eCodSeveridad');
+    
+          $.ajax({
+              type: "POST",
+              beforeSend: function(){
+                  $('.ajax-loader').css("visibility", "visible");
+                  
+            },
+              url: "https://cors-anywhere.herokuapp.com/http://cap.sdibabec.com/app/app-01-01.php",
+              data: jsonString,
+              contentType: "application/json; charset=utf-8",
+              dataType: "json",
+              success: function(data){
+                  eCodTipoAlerta.innerHTML = data.tipo;
+                  eCodSeveridad.innerHTML = data.severidad;
+                  //$("#xhrGeneral").listview("refresh");
+              },
+              complete: function(){
+                  $('.ajax-loader').css("visibility", "hidden");
+                  
+                },
+              failure: function(errMsg) {
+                  alert('Error al enviar los datos.');
+              }
+          }); 
+        
+}
