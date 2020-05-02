@@ -31,16 +31,22 @@
           height:100%;
         }
         
-        .ajax-loader img {
+        /*.ajax-loader img {
           position: relative;
           top:30%;
           left:25%;
-        }
+        }*/
             
         .miBoton
             {
                 border:none;
                 background-color:transparent;
+            }
+            .limpio
+            {
+                border: none !important;
+                box-shadow: none !important;
+                background-color: #FFF !important;
             }
 		</style>
         <title>CONSIGNAS</title>
@@ -50,19 +56,19 @@
 		<div data-role="page" id="page1">
 			<div data-role="header" data-position="fixed">
 				<h1>Alertas</h1>
-				<a href="#page2" class="ui-btn-right"><i class="far fa-file"></i></a>
-				<a href="#" class="ui-btn-left" onclick="cargarAlertas()" id="syncAlert"><i class="fas fa-sync"></i></a>
-				<a href="#" class="ui-btn-left" onclick="regresar()" id="backCon" style="display:none"><i class="fas fa-arrow-left"></i></a>
+				<a href="#page2" class="ui-btn-right btn-navegacion"><i class="far fa-file"></i></a>
+				<a href="#" class="ui-btn-left btn-navegacion" onclick="cargarAlertas()" id="syncAlert"><i class="fas fa-sync"></i></a>
+				<a href="#" class="ui-btn-left btn-navegacion" onclick="regresar()" id="backCon" style="display:none"><i class="fas fa-arrow-left"></i></a>
 			</div>
 			<form id="alertas"><input type="hidden" name="accion" id="accion" value="ale-con"></form>
 			<div class="ui-content">
 				<!--imprimimos la lista-->
-				<div id="divAlertas">
-				<ul data-role="listview" id="xhrAlertas">
+				<div id="divAlertas" class="limpio">
+				<ul data-role="listview" id="xhrAlertas" style="background-color: #FFF;">
                     
                 </ul>
                 </div>
-                <div id="divConsulta">
+                <div id="divConsulta" class="limpio">
                 <form id="frmConsulta"><input type="hidden" name="eCodAlerta" id="eCodAlerta" value=""><input type="hidden" name="accion" value="ale-det"></form>
 				<ul data-role="listview" id="xhrDetalle">
                     
@@ -84,9 +90,9 @@
 
 				<!-- page 2 -->
 		<div data-role="page" id="page2">
-			<div data-role="header" data-position="fixed">
+			<div data-role="header" data-position="fixed" class="titulo">
 				<h1>Nueva</h1>
-				<a href="#" class="ui-btn-right" onclick="guardarAlerta()"><i class="far fa-save"></i></a>
+				<a href="#" class="ui-btn-right  btn-navegacion" onclick="guardarAlerta()"><i class="far fa-save"></i></a>
 			</div>
 			
 			<div class="ui-content">
@@ -99,11 +105,11 @@
     <ul><li><a href="#one" data-ajax="false">Generales</a></li><li><a href="#two" data-ajax="false">Accesos</a></li><li><a href="#three" data-ajax="false">Centros</a></li>
     </ul>
   </div>
-  <div id="one" class="ui-body-d ui-content">
+  <div id="one" class="ui-body-d">
     <ul data-role="listview" id="xhrGeneral">
         <li class="ui-field-contain">
             <label for="tTitulo">T&iacute;tulo:</label>
-            <input type="text" name="tTitulo" id="tTitulo" value="" data-clear-btn="true">
+            <input type="text" class="ui-hidden-accesible" name="tTitulo" id="tTitulo" value="" data-clear-btn="true">
         </li>
         <li class="ui-field-contain">
             <label for="eCodTipoAlerta">Tipo:</label>
@@ -114,16 +120,16 @@
             <select name="eCodSeveridad" id="eCodSeveridad"><option value="">Seleccione...</option></select>
         </li>
         <li class="ui-field-contain">
-            <label>
+            <label class="limpio">
             <input type="checkbox" name="bReproducirAudio" id="bReproducirAudio" value="" data-clear-btn="true"> Enviar alerta de audio?</label>
         </li>
         <li class="ui-field-contain">
             <label for="tMensaje">Mensaje:</label>
-        <textarea cols="40" rows="8" name="tMensaje" id="tMensaje"></textarea>
+        <textarea cols="40" rows="3" name="tMensaje" id="tMensaje" style="resize:none"></textarea>
         </li>
 </ul>
   </div>
-  <div id="two" class="ui-body-d ui-content">
+  <div id="two" class="ui-body-d">
     <ul data-role="listview" id="xhrAccesos">
     <li>Acura</li>
     <li>Audi</li>
@@ -132,7 +138,7 @@
     <li>Ferrari</li>
 </ul>
   </div>
-  <div id="three" class="ui-body-d ui-content">
+  <div id="three" class="ui-body-d">
     <ul data-role="listview" id="xhrCentros">
     <li>Centro</li>
     <li>Centro</li>
@@ -160,7 +166,7 @@
 		<div data-role="page" id="page3">
 			<div data-role="header" data-position="fixed">
 				<h1>Perfil</h1>
-				<a href="#" class="ui-btn-right" onclick="cerrarSesion()"><i class="fas fa-sign-out-alt"></i></a>
+				<a href="#" class="ui-btn-right  btn-navegacion" onclick="cerrarSesion()"><i class="fas fa-sign-out-alt"></i></a>
 			</div>
 			
 			<div class="ui-content">
@@ -202,7 +208,14 @@
 		
 		<!--loader-->
 		<div class="ajax-loader">
-          <img src="js/images/ajax-loader.gif" class="img-responsive" />
+         <table width="100%" height="100%">
+             <tr>
+                 <td align="center" valign="middle">
+                     <img src="js/images/ajax-loader.gif" class="img-responsive" />
+                 </td>
+             </tr>
+         </table>
+          
         </div>
 		<!--loader-->
 <!--<script type="text/javascript" src="cordova.js"></script>-->
@@ -224,6 +237,8 @@
             var getPage;
             
         $(document).ready(function() {
+            $(".ui-input-text").removeClass("ui-shadow-inset");
+            $("input").closest(".ui-input-text").addClass("no-glow");
             validarSesion();
             cargarConfiguracion();
             
