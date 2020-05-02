@@ -102,7 +102,7 @@
                 <input type="hidden" name="eCodUsuario" id="eCodUsuario0">
 				    <div data-role="tabs" id="tabs">
   <div data-role="navbar">
-    <ul><li><a href="#one" data-ajax="false">Generales</a></li><li><a href="#two" data-ajax="false">Accesos</a></li><li><a href="#three" data-ajax="false">Centros</a></li>
+    <ul><li><a href="#one" data-ajax="false" id="btnUno" class="ui-btn-active ui-state-persist">Generales</a></li><li><a href="#two" data-ajax="false">Accesos</a></li><li><a href="#three" data-ajax="false">Centros</a></li>
     </ul>
   </div>
   <div id="one" class="ui-body-d">
@@ -239,6 +239,7 @@
         $(document).ready(function() {
             $(".ui-input-text").removeClass("ui-shadow-inset");
             $("input").closest(".ui-input-text").addClass("no-glow");
+            $("#btnUno").trigger( "click");
             validarSesion();
             cargarConfiguracion();
             

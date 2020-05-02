@@ -1224,9 +1224,8 @@ html body .ui-group-theme-a .ui-btn:visited,
 html head+body .ui-btn.ui-btn-a:visited {
 	/*background-color: #f6f6f6;*/
 	background-color: #FFF;
-	border-left-color: #ddd;
-	border-left-color: #ddd;
-    border-top-color: #FFF !important;
+	border-color: #ddd;
+	border-color: #ddd;
 	color: #333;
 	text-shadow: 0 1px 0 #f3f3f3
 }
