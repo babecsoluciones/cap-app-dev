@@ -217,6 +217,7 @@ function consultarAlerta(codigo)
     var divAlertas = document.getElementById('divAlertas'),
         divConsulta = document.getElementById('divConsulta'),
         syncAlert = document.getElementById('syncAlert'),
+        newAlert = document.getElementById('newAlert'),
         backCon = document.getElementById('backCon');
     
           
@@ -224,6 +225,11 @@ function consultarAlerta(codigo)
               type: "POST",
               beforeSend: function(){
                   $('.ajax-loader').css("visibility", "visible");
+                  divAlertas.style.display = 'none';
+                  
+                  
+                  syncAlert.style.display = 'none';
+                  newAlert.style.display = 'none';
                   
             },
               url: tURL,
@@ -232,10 +238,10 @@ function consultarAlerta(codigo)
               dataType: "json",
               success: function(data){
                   
-                divAlertas.style.display = 'none';
-                divConsulta.style.display = 'inline';
+                
+                    divConsulta.style.display = 'inline';
                   
-                  syncAlert.style.display = 'none';
+                  
                   backCon.style.display = 'inline';
                   
                 document.getElementById('xhrDetalle') .innerHTML = data.tHTML;
@@ -247,6 +253,7 @@ function consultarAlerta(codigo)
                 },
               failure: function(errMsg) {
                   alert('Error al enviar los datos.');
+                  regresar();
               }
           });    
         }
@@ -256,9 +263,11 @@ function regresar()
     var divAlertas = document.getElementById('divAlertas'),
         divConsulta = document.getElementById('divConsulta'),
         syncAlert = document.getElementById('syncAlert'),
+        newAlert = document.getElementById('newAlert'),
         backCon = document.getElementById('backCon');
     
     divAlertas.style.display = 'inline';
+    newAlert.style.display = 'inline';
     divConsulta.style.display = 'none';
     
     syncAlert.style.display = 'inline';

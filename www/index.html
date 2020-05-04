@@ -48,6 +48,11 @@
                 box-shadow: none !important;
                 background-color: #FFF !important;
             }
+        .inse-reg
+            {
+                border:none;
+                background-color:transparent;
+            }
 		</style>
         <title>CONSIGNAS</title>
     </head>
@@ -56,7 +61,7 @@
 		<div data-role="page" id="page1">
 			<div data-role="header" data-position="fixed">
 				<h1>Alertas</h1>
-				<a href="#page2" class="ui-btn-right btn-navegacion"><i class="far fa-file"></i></a>
+				<a href="#page2" class="ui-btn-right btn-navegacion" id="newAlert"><i class="far fa-file"></i></a>
 				<a href="#" class="ui-btn-left btn-navegacion" onclick="cargarAlertas()" id="syncAlert"><i class="fas fa-sync"></i></a>
 				<a href="#" class="ui-btn-left btn-navegacion" onclick="regresar()" id="backCon" style="display:none"><i class="fas fa-arrow-left"></i></a>
 			</div>
@@ -171,18 +176,22 @@
 			
 			<div class="ui-content">
 				<form id="frmUsuario">
+				<center>
+			    <img src="img/logo.png" style="max-width:250px;">
+			    <br><br><br>
+			    </center>
 				<input type="hidden" name="accion" value="upd-pwd">
 				<input type="hidden" name="eCodUsuario" id="eCodUsuario1">
-    <ul data-role="listview">
+    <ul data-role="listview" class="inse-reg">
         <li class="ui-field-contain">
             Usuario: <span id="tUsuario"></span>
         </li>
         <li class="ui-field-contain">
-            <label for="tPassword">Contrase&ntilde;a actual:</label>
+            <label for="tPassword">Contrase&ntilde;a<br> actual:</label>
         <input type="password" name="tPassword" id="tPassword" value="" data-clear-btn="true">
         </li>
         <li class="ui-field-contain">
-            <label for="tPasswordNvo">Contrase&ntilde;a nueva:</label>
+            <label for="tPasswordNvo">Contrase&ntilde;a<br> nueva:</label>
         <input type="password" name="tPasswordNvo" id="tPasswordNvo" value="" data-clear-btn="true">
         </li>
         <li class="ui-body ui-body-b">
@@ -211,7 +220,7 @@
          <table width="100%" height="100%">
              <tr>
                  <td align="center" valign="middle">
-                     <img src="js/images/ajax-loader.gif" class="img-responsive" />
+                     <img src="js/images/ajax-loader.gif" class="img-responsive" width="25" height="25" />
                  </td>
              </tr>
          </table>

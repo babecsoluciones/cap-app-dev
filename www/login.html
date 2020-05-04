@@ -42,21 +42,28 @@
                 border:none;
                 background-color:transparent;
             }
+        .inse-reg
+            {
+                border:none;
+                background-color:transparent;
+            }
 		</style>
         <title>Hello World</title>
     </head>
     <body>
 		<!-- page 1 -->
 		<div data-role="page" id="page1">
-			<div data-role="header" data-position="fixed">
-				<h1>Acceso al sistema</h1>
-			</div>
+			
 			
 			<div class="ui-content">
 			    <form id="datos">
+			    <center>
+			    <img src="img/logo.png" style="max-width:250px;">
+			    <br><br><br>
+			    </center>
 			    <input type="hidden" name="accion" id="accion" value="inse-reg">
 				<!--imprimimos la lista-->
-				<ul data-role="listview">
+				<ul class="inse-reg">
                     <li class="ui-field-contain">
                         <label for="correo">Correo:</label>
                         <input type="text" name="correo" id="correo" value="" data-clear-btn="true">
@@ -65,10 +72,10 @@
                     <label for="password">Password:</label>
                     <input type="password" name="password" id="password" value="" data-clear-btn="true">
                     </li>
-                    <li>
+                    <li class="ui-field-contain">
                         
                                 <center>
-                                <div class="ui-block-b"><button type="button" class="ui-btn ui-corner-all ui-btn-a" onclick="iniciarSesion()">Acceder</button></div>
+                                <button type="button" class="ui-btn ui-corner-all ui-btn-a" onclick="iniciarSesion()">Acceder</button>
                                 </center>
                        
                     </li>
