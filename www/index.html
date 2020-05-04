@@ -101,17 +101,12 @@
 			</div>
 			
 			<div class="ui-content">
-			<form id="frmConfig"><input type="hidden" name="accion" value="cfg-con"></form>
 				<!--imprimimos los tabs-->
-				<form id="frmNueva">
-                <input type="hidden" name="eCodUsuario" id="eCodUsuario0">
-				    <div data-role="tabs" id="tabs">
-  <div data-role="navbar">
-    <ul><li><a href="#one" data-ajax="false" id="btnUno" class="ui-btn-active ui-state-persist">Generales</a></li><li><a href="#two" data-ajax="false">Accesos</a></li><li><a href="#three" data-ajax="false">Centros</a></li>
-    </ul>
-  </div>
-  <div id="one" class="ui-body-d">
-    <ul data-role="listview" id="xhrGeneral">
+				<form id="frmNueva" style="margin-top:-25px;">
+                <div data-role="collapsible-set" data-inset="false"  data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+    <div data-role="collapsible">
+        <h3>Generales</h3>
+        <ul data-role="listview" id="xhrGeneral">
         <li class="ui-field-contain">
             <label for="tTitulo">T&iacute;tulo:</label>
             <input type="text" class="ui-hidden-accesible" name="tTitulo" id="tTitulo" value="" data-clear-btn="true">
@@ -133,27 +128,32 @@
         <textarea cols="40" rows="3" name="tMensaje" id="tMensaje" style="resize:none"></textarea>
         </li>
 </ul>
-  </div>
-  <div id="two" class="ui-body-d">
-    <ul data-role="listview" id="xhrAccesos">
-    <li>Acura</li>
-    <li>Audi</li>
-    <li>BMW</li>
-    <li>Cadillac</li>
-    <li>Ferrari</li>
-</ul>
-  </div>
-  <div id="three" class="ui-body-d">
-    <ul data-role="listview" id="xhrCentros">
-    <li>Centro</li>
-    <li>Centro</li>
-    <li>Centro</li>
-</ul>
-  </div>
-  
+    </div>
+    <div data-role="collapsible">
+        <h3>Accesos</h3>
+        <ul data-role="listview" id="xhrAccesos">
+            <li>Acura</li>
+            <li>Audi</li>
+            <li>BMW</li>
+            <li>Cadillac</li>
+            <li>Ferrari</li>
+        </ul>
+    </div>
+    <div data-role="collapsible">
+        <h3>centros</h3>
+        <ul data-role="listview" id="xhrCentros">
+            <li>Centro</li>
+            <li>Centro</li>
+            <li>Centro</li>
+        </ul>
+    </div>
 </div>
+                
+			<input type="hidden" name="eCodUsuario" id="eCodUsuario0">	    
 			</form>	
 				<!--imprimimos los tabs-->
+				<!--formulario de configuracion-->
+				<form id="frmConfig"><input type="hidden" name="accion" value="cfg-con"></form>
 			</div><!-- end page 2 content -->
 			
 			<div data-role="footer" data-position="fixed">
