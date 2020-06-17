@@ -340,7 +340,7 @@ function cargarTienda()
         }
 }
 
-function cargarAlertas()
+function cargarAlertas(bMostrar = true)
 {
       var obj = $('#alertas').serializeJSON();
           var jsonString = JSON.stringify(obj);
@@ -350,8 +350,16 @@ function cargarAlertas()
           $.ajax({
               type: "POST",
               beforeSend: function(){
-                  $('.ajax-loader').css("visibility", "visible");
-                  syncAlertas.disabled=true;
+                if(bMostrar)  
+                {
+                    $('.ajax-loader').css("visibility", "visible");
+                    syncAlertas.disabled=true;
+                }
+                else
+                {
+                    $('#divLoader').css("display", "inline");
+                    $('#divAlertas').css("visibility", "hidden");
+                }
             },
               url: tURL,
               data: jsonString,
@@ -362,8 +370,18 @@ function cargarAlertas()
                   $("#xhrAlertas").listview("refresh");
               },
               complete: function(){
-                  $('.ajax-loader').css("visibility", "hidden");
-                  syncAlertas.disabled=false;
+                if(bMostrar)  
+                {
+                    $('.ajax-loader').css("visibility", "hidden");
+                    syncAlertas.disabled=false;
+                }
+
+                else
+                {
+                    $('#divLoader').css("display", "none");
+                    $('#divAlertas').css("visibility", "visible");
+                }
+                  
                 },
               failure: function(errMsg) {
                   alert('Error al enviar los datos.');

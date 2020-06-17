@@ -66,13 +66,16 @@
 			<div data-role="header" data-position="fixed">
 				<h1>Alertas</h1>
 				<a href="#page2" class="ui-btn-right btn-navegacion" id="newAlert"><i class="far fa-file"></i></a>
-				<a href="#" class="ui-btn-left btn-navegacion" onclick="cargarAlertas()" id="syncAlert"><i class="fas fa-sync"></i></a>
+				<a href="#" class="ui-btn-left btn-navegacion" onclick="cargarAlertas()" id="syncAlert" style="display:none;"><i class="fas fa-sync"></i></a>
 				<a href="#" class="ui-btn-left btn-navegacion" onclick="regresar()" id="backCon" style="display:none"><i class="fas fa-arrow-left"></i></a>
 			</div>
 			<form id="alertas"><input type="hidden" name="accion" id="accion" value="ale-con"></form>
 			<div class="ui-content">
-				<!--imprimimos la lista-->
-				<div id="divAlertas" class="limpio">
+                <!--imprimimos la lista-->
+                <div id="divLoader" class="limpio" style=" display:none; text-align: center; width:100%">
+                   <center><img src="img/refresher.gif" width="25" height="25"></center>
+                </div>
+				<div id="divAlertas" class="limpio" style=" visibility:visible;">
 				<ul data-role="listview" id="xhrAlertas" style="background-color: #FFF;">
                     
                 </ul>
@@ -136,19 +139,13 @@
     <div data-role="collapsible">
         <h3>Accesos</h3>
         <ul data-role="listview" id="xhrAccesos">
-            <li>Acura</li>
-            <li>Audi</li>
-            <li>BMW</li>
-            <li>Cadillac</li>
-            <li>Ferrari</li>
+            
         </ul>
     </div>
     <div data-role="collapsible">
         <h3>centros</h3>
         <ul data-role="listview" id="xhrCentros">
-            <li>Centro</li>
-            <li>Centro</li>
-            <li>Centro</li>
+            
         </ul>
     </div>
 </div>
@@ -296,7 +293,7 @@
             $('#divAlertas').xpull({
                 'callback': function () {
                     console.log('Released...');
-                    cargarAlertas();
+                    cargarAlertas(false);
                 }
             });
 
