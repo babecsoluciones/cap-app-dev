@@ -55,6 +55,10 @@
             }
 		</style>
         <title>CONSIGNAS</title>
+        
+        <link rel="stylesheet" href="xpull/xpull.css">
+    
+        
     </head>
     <body>
 		<!-- page 1 -->
@@ -280,5 +284,24 @@
          },1500);
             
     </script>
+        
+        <script src="xpull/xpull.js"></script>
+        
+        <script>
+
+        // jquery document ready
+        $(function () {
+
+            // Init xpull plugin for demo
+            $('#divAlertas').xpull({
+                'callback': function () {
+                    console.log('Released...');
+                    cargarAlertas();
+                }
+            });
+
+        });
+    </script>
+        
     </body>
 </html>
